@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@studet.42tokyo.jp>      +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 23:58:25 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/04/30 20:53:17 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:26:03 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_isalnum(int c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);
-	else if (c >= 'a' && c <= 'z')
+	else if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
 	else
 		return (0);

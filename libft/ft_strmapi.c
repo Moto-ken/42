@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@studet.42tokyo.jp>      +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 17:54:10 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/02 18:18:18 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:30:47 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,22 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	return (result);
 }
 
-char	str_toupper(unsigned int i, char c)
-{
-	(void)i;
-	return (char)ft_toupper((int)c);
-}
+// char	str_toupper(unsigned int i, char c)
+// {
+// 	(void)i;
+// 	return ((char)ft_toupper((int)c));
+// }
 
-int	main(void)
-{
-	const char	*s = "hello world";
-	char		*new_str;
+// int	main(void)
+// {
+// 	const char	*s = "hello world";
+// 	char		*new_str;
 
-	new_str = ft_strmapi(s, str_toupper);
-	if (new_str)
-	{
-		printf("%s\n", new_str);
-		free(new_str);
-	}
-	return (0);
-}
+// 	new_str = ft_strmapi(s, str_toupper);
+// 	if (new_str)
+// 	{
+// 		printf("%s\n", new_str);
+// 		free(new_str);
+// 	}
+// 	return (0);
+// }

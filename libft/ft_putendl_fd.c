@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@studet.42tokyo.jp>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/25 00:53:48 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/06 15:37:06 by kemotoha         ###   ########.fr       */
+/*   Created: 2025/05/03 12:55:27 by kemotoha          #+#    #+#             */
+/*   Updated: 2025/05/06 13:14:50 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isprint(int c)
+void	ft_putendl_fd(char *s, int fd)
 {
-	if (c >= 32 && c <= 126)
-		return (1);
-	return (0);
+	ft_putstr_fd(s, fd);
+	write(fd, "\n", 1);
 }
 
-// int	main(void)
+// int main(void)
 // {
-// 	char	c;
-
-// 	c = (char)128;
-// 	printf("%d", ft_isprint(c));
-// 	return (0);
+//     int fd = 1;
+//     char *str = "Hello, World";
+//     ft_putendl_fd(str, fd);
+//     return (0);
 // }

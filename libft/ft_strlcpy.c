@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@studet.42tokyo.jp>      +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 10:10:02 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/04/30 20:54:43 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:26:43 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,8 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		}
 		dst[i] = '\0';
 	}
-	else
-	{
-		while (src[i])
-			i++;
-	}
+	while (src[i])
+		i++;
 	return (i);
 }
 
@@ -41,8 +38,8 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 // 	size_t		size;
 
 // 	size = 10;
-// 	ft_strlcpy(dest, src, size);
 // 	printf("%zu\n", ft_strlcpy(dest, src, size));
+// 	ft_strlcpy(dest, src, size);
 // 	printf("%s\n", dest);
 // 	return (0);
 // }

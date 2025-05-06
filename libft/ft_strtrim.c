@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@studet.42tokyo.jp>      +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 14:38:15 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/02 15:21:14 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:12:27 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ char	*ft_strtrim(char const *s1, char const *set)
 	return (trimmed);
 }
 
-int	main(void)
-{
-	const char	s1[] = "  hello world ";
-	const char	s2[] = " ";
-	char		*result;
+// int	main(void)
+// {
+// 	const char	s1[] = "  hello world ";
+// 	const char	s2[] = " ";
+// 	char		*result;
 
-	result = ft_strtrim(s1, s2);
-	printf("%s\n", result);
-	free(result);
-	return (0);
-}
+// 	result = ft_strtrim(s1, s2);
+// 	printf("%s\n", result);
+// 	free(result);
+// 	return (0);
+// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@studet.42tokyo.jp>      +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:55:50 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/02 13:34:38 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:45:21 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (len > l - start)
 		len = l - start;
 	str = malloc(len + 1);
+	if (str == NULL)
+		return (NULL);
 	while (i < len && s[start + i])
 	{
 		str[i] = s[i + start];

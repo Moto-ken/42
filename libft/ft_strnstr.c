@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@studet.42tokyo.jp>      +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 04:47:06 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/04/30 20:55:19 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:02:33 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	while (big[i] && i < len)
 	{
 		j = 0;
-		while (little[j] && big[i + j] && i + j < len && big[i
-			+ j] == little[j])
+		while (little[j] && big[i + j] && i + j < len
+			&& big[i + j] == little[j])
 			j++;
 		if (little[j] == '\0')
 			return ((char *)&big[i]);

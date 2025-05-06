@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kemotoha <kemotoha@studet.42tokyo.jp>      +#+  +:+       +#+         #
+#    By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/30 18:44:34 by kemotoha          #+#    #+#              #
-#    Updated: 2025/05/02 17:46:54 by kemotoha         ###   ########.fr        #
+#    Created: 2025/05/06 13:07:19 by kemotoha          #+#    #+#              #
+#    Updated: 2025/05/06 17:31:19 by kemotoha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,13 @@ SRCS = ft_isalpha.c \
        ft_strjoin.c \
        ft_strtrim.c \
        ft_split.c \
-       ft_itoa.c
+       ft_itoa.c \
+       ft_putstr_fd.c \
+       ft_putchar_fd.c \
+       ft_striteri.c \
+       ft_putendl_fd.c \
+       ft_putnbr_fd.c \
+       ft_strmapi.c
 
 OBJS = $(SRCS:.c=.o)
 INC_DIR = includes
