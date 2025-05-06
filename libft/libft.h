@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 19:33:50 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/03 12:42:16 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:05:13 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ char	*ft_itoa(int n);
 void    ft_putstr_fd(char *s, int fd);
 void    ft_putchar_fd(char c, int fd);
 void    ft_striteri(char *s, void (*f)(unsigned int, char*));
+void    ft_putendl_fd(char *s, int fd);
+void    ft_putnbr_fd(int n, int fd);
 
 #endif

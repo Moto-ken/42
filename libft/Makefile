@@ -6,7 +6,7 @@
 #    By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/30 18:44:34 by kemotoha          #+#    #+#              #
-#    Updated: 2025/05/03 12:41:58 by kemotoha         ###   ########.fr        #
+#    Updated: 2025/05/06 09:05:33 by kemotoha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,9 @@ SRCS = ft_isalpha.c \
        ft_itoa.c \
        ft_putstr_fd.c \
        ft_putchar_fd.c \
-       ft_striteri.c
+       ft_striteri.c \
+       ft_putendl_fd.c \
+       ft_putnbr_fd.c
 
 OBJS = $(SRCS:.c=.o)
 INC_DIR = includes
