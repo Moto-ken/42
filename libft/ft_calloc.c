@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@studet.42tokyo.jp>      +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:05:33 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/04/30 21:58:34 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:40:54 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 	if (nmemb == 0 || size == 0)
 		return ((void *)malloc(0));
+	if (nmemb > ((size_t)-1) / size)
+		return (NULL);
 	ptr = malloc(nmemb * size);
 	if (ptr == NULL)
 		return (NULL);
@@ -27,19 +29,16 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 // int	main(void)
 // {
-// 	int i = 0;
+// 	size_t	max_size;
+// 	size_t	a;
+// 	size_t	b;
+// 	void	*overflow;
 
-// 	int *arr = ft_calloc(5, sizeof(int));
-// 	if (!arr)
-// 	{
-// 		printf("Memory allocation failed\n");
-// 		return (1);
-// 	}
-// 	while (i < 5)
-// 	{
-// 		printf("arr[%d] = %d\n", i, arr[i]);
-// 		i++;
-// 	}
-// 	free(arr);
+// 	max_size = (size_t)-1;
+// 	printf("%p\n", ft_calloc(10, 4));
+// 	a = max_size / 2 + 1;
+// 	b = 3;
+// 	overflow = ft_calloc(a, b);
+// 	printf("%p\n", overflow);
 // 	return (0);
 // }

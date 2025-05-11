@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 20:55:50 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/06 15:45:21 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/09 18:09:48 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
-	size_t	l;
 	char	*str;
+	size_t	l;
 
 	i = 0;
 	if (s == NULL)

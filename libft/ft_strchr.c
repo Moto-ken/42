@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/27 22:48:08 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/06 17:06:56 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:02:53 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
