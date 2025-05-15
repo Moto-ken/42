@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 19:54:35 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/15 23:29:47 by kemotoha         ###   ########.fr       */
+/*   Created: 2025/05/15 20:05:36 by kemotoha          #+#    #+#             */
+/*   Updated: 2025/05/15 20:19:03 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-
-int ft_printf(const char *format, ...);
-int ft_putchar_fd(char c, int fd);
-int ft_putstr_fd(char *s, int fd);
-int ft_putnbr_fd(int n, int fd);
-int ft_puthex_fd(unsigned long n, int fd, int upper);
-int ft_unsigned_putnbr_fd(unsigned int n, int fd);
-
-#endif
+int ft_putchar_fd(char c, int fd)
+{
+    write(fd, &c, 1);
+    return (1);
+}

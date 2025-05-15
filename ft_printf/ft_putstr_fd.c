@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 19:54:35 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/15 23:29:47 by kemotoha         ###   ########.fr       */
+/*   Created: 2025/05/15 20:11:04 by kemotoha          #+#    #+#             */
+/*   Updated: 2025/05/15 20:21:06 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdarg.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
+int ft_putstr_fd(char *s, int fd)
+{
+	size_t	i;
 
-int ft_printf(const char *format, ...);
-int ft_putchar_fd(char c, int fd);
-int ft_putstr_fd(char *s, int fd);
-int ft_putnbr_fd(int n, int fd);
-int ft_puthex_fd(unsigned long n, int fd, int upper);
-int ft_unsigned_putnbr_fd(unsigned int n, int fd);
+	i = 0;
+	if (s == NULL)
+		return (0);
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+    return ((int)i);
+}
 
-#endif
