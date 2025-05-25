@@ -6,15 +6,15 @@
 /*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 02:35:26 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/23 09:42:51 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/25 10:08:29 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	size_t len;
+	size_t	len;
 
 	if (!s)
 		return (0);
@@ -24,9 +24,9 @@ size_t ft_strlen(const char *s)
 	return (len);
 }
 
-char *ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t i;
+	size_t	i;
 
 	if (!s)
 		return (NULL);
@@ -84,10 +84,9 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 		i++;
 	}
 	return (dest);
-
 }
 
-char *ft_strdup(const char *s1)
+char	*ft_strdup(const char *s1)
 {
 	size_t	i;
 	char	*str;
@@ -107,13 +106,14 @@ char *ft_strdup(const char *s1)
 	return (str);
 }
 
-char *extract_line(const char *str)
+char	*extract_line(const char *str)
 {
-	int i = 0;
-	char *line;
+	int		i;
+	char	*line;
 
 	if (!str)
 		return (NULL);
+	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (str[i] == '\n')
@@ -126,28 +126,33 @@ char *extract_line(const char *str)
 	return (line);
 }
 
-char *save_remainder(const char *str)
+char	*save_remainder(char *str)
 {
-	int i = 0;
-	int j = 0;
-	char *remainder;
+	int		i;
+	int		j;
+	char	*remainder;
 
 	if (!str)
 		return (NULL);
+	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (!str[i])
 	{
-		free((char *)str);
+		free(str);
 		return (NULL);
 	}
 	i++;
 	remainder = malloc(ft_strlen(str) - i + 1);
 	if (!remainder)
+	{
+		free(str);
 		return (NULL);
+	}
+	j = 0;
 	while (str[i])
 		remainder[j++] = str[i++];
 	remainder[j] = '\0';
-	free((char *)str);
+	free(str);
 	return (remainder);
 }
