@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 01:41:03 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/25 09:48:46 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:41:47 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char    *save_remainder(char *str);
 char    *extract_line(const char *str);
 size_t  ft_strlen(const char *s);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
-char *ft_strdup(const char *s1);
+char    *ft_strdup(const char *s1);
+void    free_remainder(char **remainder);
 
 # endif

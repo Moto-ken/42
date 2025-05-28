@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 02:35:26 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/25 10:08:29 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:56:33 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*extract_line(const char *str)
 	int		i;
 	char	*line;
 
-	if (!str)
+	if (!str || str[0] == '\0')
 		return (NULL);
 	i = 0;
 	while (str[i] && str[i] != '\n')
@@ -126,33 +126,35 @@ char	*extract_line(const char *str)
 	return (line);
 }
 
-char	*save_remainder(char *str)
+char *save_remainder(char *str)
 {
-	int		i;
-	int		j;
+	int		i = 0;
+	int		j = 0;
 	char	*remainder;
 
 	if (!str)
 		return (NULL);
-	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (!str[i])
-	{
-		free(str);
 		return (NULL);
-	}
 	i++;
-	remainder = malloc(ft_strlen(str) - i + 1);
-	if (!remainder)
-	{
-		free(str);
+	if (str[i] == '\0')
 		return (NULL);
-	}
-	j = 0;
+	remainder = malloc(ft_strlen(str + i) + 1);
+	if (!remainder)
+		return (NULL);
 	while (str[i])
 		remainder[j++] = str[i++];
 	remainder[j] = '\0';
-	free(str);
 	return (remainder);
+}
+
+void free_remainder(char **remainder)
+{
+	if (*remainder)
+	{
+		free(*remainder);
+		*remainder = NULL;
+	}
 }
