@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 02:35:26 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/05/28 14:56:33 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:32:23 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,57 +104,4 @@ char	*ft_strdup(const char *s1)
 	}
 	str[i] = '\0';
 	return (str);
-}
-
-char	*extract_line(const char *str)
-{
-	int		i;
-	char	*line;
-
-	if (!str || str[0] == '\0')
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (str[i] == '\n')
-		i++;
-	line = malloc(i + 1);
-	if (!line)
-		return (NULL);
-	ft_memcpy(line, str, i);
-	line[i] = '\0';
-	return (line);
-}
-
-char *save_remainder(char *str)
-{
-	int		i = 0;
-	int		j = 0;
-	char	*remainder;
-
-	if (!str)
-		return (NULL);
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (!str[i])
-		return (NULL);
-	i++;
-	if (str[i] == '\0')
-		return (NULL);
-	remainder = malloc(ft_strlen(str + i) + 1);
-	if (!remainder)
-		return (NULL);
-	while (str[i])
-		remainder[j++] = str[i++];
-	remainder[j] = '\0';
-	return (remainder);
-}
-
-void free_remainder(char **remainder)
-{
-	if (*remainder)
-	{
-		free(*remainder);
-		*remainder = NULL;
-	}
 }
