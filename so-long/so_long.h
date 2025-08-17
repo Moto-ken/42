@@ -10,6 +10,7 @@
 # include "minilibx-linux/mlx.h"
 #include <X11/keysym.h>
 #include <X11/X.h>
+#include "libft/libft.h"
 
 #define TILE_SIZE 32
 
@@ -56,10 +57,14 @@ int check_square(char **map);
 char *remove_newline(char *line);
 void move_player(t_game *game, int dx, int dy);
 int key_hook(int keycode, t_game *game);
+int render_window(t_game *game);
 
 void find_player_position(t_game *game);
 void count_collectibles(t_game *game);
 int  exit_game(t_game *game);
 void init_game(t_game *game);
+char **dup_map(char **map);
+int check_flood(char **map);
+void flood_fill(char **map, int x, int y);
 
 #endif

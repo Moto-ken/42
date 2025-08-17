@@ -8,19 +8,23 @@ NAME        = so_long
 SRC_DIR     = .
 LIBFT_DIR   = libft
 MLX_DIR     = minilibx-linux
+GNL_DIR 	= get_next_line
 
 # Source Files
 SRC_FILES   = \
               main.c \
-              so_long.c \
               get_next_line/get_next_line.c \
-              get_next_line/get_next_line_utils.c
+              get_next_line/get_next_line_utils.c \
+			  check_map.c \
+			  event.c \
+			  map.c \
+			  player.c
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS        = $(SRCS:.c=.o)
 
 # Includes
-INCLUDES    = -I. -I$(LIBFT_DIR) -I$(MLX_DIR)
+INCLUDES    = -I. -I$(LIBFT_DIR) -I$(MLX_DIR) -I$(GNL_DIR)
 
 # Libraries
 LIBFT       = $(LIBFT_DIR)/libft.a
@@ -46,6 +50,9 @@ $(LIBFT):
 # Build MinilibX
 $(MLX):
 	$(MAKE) -C $(MLX_DIR)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Clean object files
 clean:
