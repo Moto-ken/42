@@ -51,14 +51,14 @@ int start_end_line(char *line);
 int bet_line(char *line);
 int check_all(char **map);
 char *join_map_lines(char **map);
-void load_images(t_game *game);
+int load_images(t_game *game);
 void draw_map(t_game *game);
 int check_square(char **map);
 char *remove_newline(char *line);
 void move_player(t_game *game, int dx, int dy);
 int key_hook(int keycode, t_game *game);
 int render_window(t_game *game);
-
+void destroy_images(t_game *game);
 void find_player_position(t_game *game);
 void count_collectibles(t_game *game);
 int  exit_game(t_game *game);

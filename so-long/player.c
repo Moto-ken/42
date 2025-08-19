@@ -67,5 +67,5 @@ void count_collectibles(t_game *game)
         y++;
     }
     game->total_collectibles = count;
-    game->collected = 0; // ここで collected の初期化も必ずやる
+    // game->collected = 0; // ここで? collected の初期化をする必要はある？
 }
