@@ -1,68 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:53:26 by kemotoha          #+#    #+#             */
+/*   Updated: 2025/08/21 18:49:52 by kemotoha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long.h"
 
-int	check_map(char **map)
+static t_counts	count_map_elements(const char *str)
 {
-	int	i = 0;
-	int last;
-	int result = 0;
+	t_counts	counts;
+	int			i;
 
-	if (check_square(map))
-		return (1);
-	while (map[i])
-		i++;
-	last = i - 1;
+	counts.p = 0;
+	counts.e = 0;
+	counts.c = 0;
 	i = 0;
-	while (map[i])
-	{
-		if (i == 0 || i == last)
-			result = start_end_line(map[i]);
-		else 
-			result = bet_line(map[i]);
-		if (result == 1)
-			return (1);
-		i++;
-	}
-	if (check_all(map))
-		return (1);
-	if (check_flood(map))
-		return (1);
-	return (result);
-}
-
-int check_all(char **map)
-{
-	char *str = join_map_lines(map);
-	int i = 0;
-	int count_p = 0;
-	int count_e = 0;
-	int count_c = 0;
-	if (!map)
-		return (1);
 	while (str[i])
 	{
 		if (str[i] == 'P')
-			count_p++;
+			counts.p++;
 		else if (str[i] == 'E')
-			count_e++;
+			counts.e++;
 		else if (str[i] == 'C')
-			count_c++;
+			counts.c++;
 		i++;
 	}
-	free(str);
-	if (count_p != 1 || count_e != 1 || count_c < 1)
-	{
-		write(2, "Error\nMap must contain one P, one E, and at least one C\n", 57);
-		return (1);
-	}
-	return (0);
+	return (counts);
 }
 
-char *join_map_lines(char **map)
+char	*join_map_lines(char **map)
 {
-	char *result = NULL;
-	char *tmp;
-	int i = 0;
+	char	*result;
+	char	*tmp;
+	int		i;
+
+	result = NULL;
+	i = 0;
 	if (!map || !map[0])
 		return (NULL);
 	result = ft_strdup("");
@@ -80,60 +59,39 @@ char *join_map_lines(char **map)
 	return (result);
 }
 
-int start_end_line(char *line)
+static int	check_all(char **map)
 {
-	int i = 0;
-	int len = ft_strlen(line);
+	char		*str;
+	t_counts	counts;
 
-	if (len > 0 && line[len - 1] == '\n')
-		len--;
+	if (!map)
+		return (1);
+	str = join_map_lines(map);
+	if (!str)
+	{
+		free(str);
+		return (1);
+	}
+	counts = count_map_elements(str);
+	free(str);
+	if (counts.p != 1 || counts.e != 1 || counts.c < 1)
+	{
+		write(2, "Error\nMap must contain one P, one E, and at least one C\n",
+			57);
+		return (1);
+	}
+	return (0);
+}
+
+static int	check_square(char **map)
+{
+	int		i;
+	size_t	len;
+
+	i = 1;
+	len = ft_strlen(map[0]);
 	if (len == 0)
 		return (1);
-	while (i < len)
-	{
-		if (line[i] != '1')
-		{
-			write(2, "Error\nTop or bottom line is not closed by walls\n", 49);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int bet_line(char *line)
-{
-	int len = ft_strlen(line);
-	int i = 0;
-	if (line[len - 1] == '\n')
-		len--;
-	if (line[0] != '1' || line[len - 1] != '1')
-	{
-		write(2, "Error\nMap is not surrounded by walls\n", 38);
-		return (1);
-	}
-	while (line[i])
-	{	
-		if (line[i] == '\n')
-		{
-			i++;
-			continue;
-		}
-		if (line[i] != 'C' && line[i] != 'E' && line[i] != 'P' && line[i] != '0' && line[i] != '1')
-		{
-			write(2, "Error\nInvalid character found in map\n", 38);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int check_square(char **map)
-{
-	int i = 1;
-	size_t len = ft_strlen(map[0]);
-
 	while (map[i])
 	{
 		if (ft_strlen(map[i]) != len)
@@ -146,81 +104,15 @@ int check_square(char **map)
 	return (0);
 }
 
-char *remove_newline(char *line)
+int	check_map(char **map)
 {
-	size_t len = ft_strlen(line);
-	if (len > 0 && line[len - 1] == '\n')
-		line[len - 1] = '\0';
-	return (line);
-}
-
-void flood_fill(char **map, int x, int y)
-{
-	if (!map[y] || !map[y][x])
-		return;
-	if (map[y][x] == '1' || map[y][x] == 'V')
-		return;
-	map[y][x] = 'V';
-	flood_fill(map, x + 1, y);
-	flood_fill(map, x - 1, y);
-	flood_fill(map, x, y + 1);
-	flood_fill(map, x, y - 1);
-}
-
-int check_flood(char **map)
-{
-	t_game game;
-	game.map = map;
-	find_player_position(&game);
-	char **map_cpy = dup_map(map);
-	if (!map_cpy)
+	if (check_square(map))
 		return (1);
-	flood_fill(map_cpy, game.player_x, game.player_y);
-	char *map_line = join_map_lines(map_cpy);
-	if (!map_line)
-	{
-		free_map(map_cpy);
+	if (check_closed(map))
 		return (1);
-	}
-	int i = 0;
-	while (map_line[i])
-	{
-		if (map_line[i] == 'C' || map_line[i] == 'E')
-		{
-			write(2, "error\nThe map is not connected.\n", 33);
-			free_map(map_cpy);
-			free (map_line);
-			return (1);
-		}
-		i++;
-	}
-	free_map(map_cpy);
-	free(map_line);
+	if (check_all(map))
+		return (1);
+	if (check_flood(map))
+		return (1);
 	return (0);
-}
-
-char **dup_map(char **map)
-{
-	char **copy;
-	int i = 0;
-	int j = 0;
-
-	while (map[i])
-		i++;
-	copy = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!copy)
-		return (NULL);
-
-	while (j < i)
-	{
-		copy[j] = ft_strdup(map[j]);
-		if (!copy[j])
-		{
-			free_map (copy);
-			return (NULL);
-		}
-		j++;
-	}
-	copy[j] = NULL;
-	return  (copy);
 }

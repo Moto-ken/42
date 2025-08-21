@@ -1,95 +1,102 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:53:42 by kemotoha          #+#    #+#             */
+/*   Updated: 2025/08/21 19:00:50 by kemotoha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long.h"
 
 int	count_lines(const char *filename)
 {
 	int		fd;
-	int		lines = 0;
+	int		line_count;
 	char	*line;
 
+	line_count = 0;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (-1);
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		if (line[0] != '\n' && line[0] != '\0')
-			lines++;
+			line_count++;
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
-	return (lines);
+	return (line_count);
 }
 
-char **map(const char *filename)
+static char	*remove_newline(char *line)
 {
-	int		fd;
-	int		line_count = count_lines(filename);
-	char	**result;
-	int		i = 0;
-	char	*line;
+	size_t	len;
 
-	if (line_count <= 0)
-		return (NULL);
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (NULL);
+	len = ft_strlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		line[len - 1] = '\0';
+	return (line);
+}
+
+static char	**read_map_lines(int fd, int line_count)
+{
+	char	**result;
+	char	*line;
+	int		i;
 
 	result = malloc(sizeof(char *) * (line_count + 1));
 	if (!result)
 		return (NULL);
-
-	while ((line = get_next_line(fd)) && i < line_count)
+	i = 0;
+	line = get_next_line(fd);
+	while (line && i < line_count)
+	{
 		result[i++] = remove_newline(line);
+		line = get_next_line(fd);
+	}
 	result[i] = NULL;
 	if (i != line_count)
 	{
 		free_map(result);
 		return (NULL);
 	}
+	return (result);
+}
+
+char	**map(const char *filename)
+{
+	int		fd;
+	int		line_count;
+	char	**result;
+
+	line_count = count_lines(filename);
+	if (line_count <= 0)
+		return (NULL);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	result = read_map_lines(fd, line_count);
 	close(fd);
 	return (result);
 }
 
 void	free_map(char **map)
 {
+	int	i;
+
 	if (!map)
-		return;
-	int i = 0;
+		return ;
+	i = 0;
 	while (map[i])
 	{
 		free(map[i]);
 		i++;
 	}
 	free(map);
-}
-
-void draw_map(t_game *game)
-{
-    int x;
-    int y = 0;
-    void *img;
-
-    while (y < game->map_height)
-    {
-        x = 0;
-        while (x < game->map_width)
-        {
-            char tile = game->map[y][x];
-            img = NULL;
-            if (tile == '1')
-                img = game->img.wall;
-            else if (tile == '0')
-                img = game->img.floor;
-            else if (tile == 'P')
-                img = game->img.player;
-            else if (tile == 'E')
-                img = game->img.exit;
-            else if (tile == 'C')
-                img = game->img.collectible;
-            if (img)
-                mlx_put_image_to_window(game->mlx, game->win, img, x * TILE_SIZE, y * TILE_SIZE);
-            x++;
-        }
-        y++;
-    }
 }
