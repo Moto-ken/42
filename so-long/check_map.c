@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:53:26 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/08/21 18:49:52 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/03 15:00:52 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ static int	check_square(char **map)
 	i = 1;
 	len = ft_strlen(map[0]);
 	if (len == 0)
+	{
+		write(2, "error\nFirst line is empty\n", 27);
 		return (1);
+	}
 	while (map[i])
 	{
 		if (ft_strlen(map[i]) != len)
@@ -112,7 +115,7 @@ int	check_map(char **map)
 		return (1);
 	if (check_all(map))
 		return (1);
-	if (check_flood(map))
+	if (check_dfs(map))
 		return (1);
 	return (0);
 }

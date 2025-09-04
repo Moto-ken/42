@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:53:34 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/08/21 18:54:24 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/08/25 23:53:45 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 int	exit_game(t_game *game)
 {
+	if (!game)
+		return (0);
 	destroy_images(game);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
 	free_map(game->map);
 	exit(0);
-	return (0);
 }
 
 int	key_hook(int keycode, t_game *game)

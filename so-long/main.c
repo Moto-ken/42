@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:53:02 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/08/21 19:27:00 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/04 15:19:40 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,23 +82,26 @@ static int	init_window(t_game *game)
 			game->map_height * TILE_SIZE, "so_long");
 	if (!game->win)
 	{
+		mlx_destroy_display(game->mlx);
 		free_map(game->map);
+		free(game->mlx);
 		return (1);
 	}
 	if (load_images(game))
 	{
-		free_map(game->map);
-		mlx_destroy_window(game->mlx, game->win);
+		exit_game(game);
 		return (1);
 	}
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	t_game	game;
 
-	if (setup_game(&game, "maps/map.ber"))
+	if (argc != 2)
+		return (1);
+	if (setup_game(&game, argv[1]))
 		return (1);
 	if (init_window(&game))
 		return (1);

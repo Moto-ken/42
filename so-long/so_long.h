@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:55:25 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/08/21 19:04:10 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:07:39 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_game
 	int		collected;
 	int		total_collectibles;
 	int		steps;
+
+	int		**visited;
 }			t_game;
 
 typedef struct s_counts
@@ -75,7 +77,10 @@ void		destroy_images(t_game *game);
 void		find_player_position(t_game *game);
 void		count_collectibles(t_game *game);
 int			exit_game(t_game *game);
-int			check_flood(char **map);
+// int			check_flood(char **map);
 int			check_closed(char **map);
-
+int			check_dfs(char **map);
+void		free_int_array(int **arr, int height);
+char		**copy_map_ignore_exit(char **map, int height);
+int			**alloc_int_array(int height, int width);
 #endif

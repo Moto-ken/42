@@ -6,7 +6,7 @@
 #    By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/21 14:53:15 by kemotoha          #+#    #+#              #
-#    Updated: 2025/08/21 19:06:22 by kemotoha         ###   ########.fr        #
+#    Updated: 2025/09/03 14:11:41 by kemotoha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,10 @@ SRC_FILES   = \
 			  event.c \
 			  map.c \
 			  player.c \
-			  check_flood.c \
+			  map_cpy.c \
 			  check_closed.c \
-			  display.c
+			  display.c \
+			  check_dfs.c
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS        = $(SRCS:.c=.o)

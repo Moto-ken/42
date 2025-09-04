@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:03:43 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/08/21 19:24:26 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/08/26 01:57:54 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,11 @@ int	check_closed(char **map)
 	int	last;
 	int	result;
 
-	last = count_lines("maps/map.ber") - 1;
+	i = 0;
+	while (map[i])
+		i++;
+	i--;
+	last = i;
 	i = 0;
 	result = 0;
 	while (map[i])
