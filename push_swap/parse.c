@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:03:20 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/15 12:03:24 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/16 02:27:37 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,39 @@ int	new_ft_atoi(const char *nptr, int *out)
 	return (0);
 }
 
+int	duplicate(t_node *stack, int nb)
+{
+	while (stack)
+	{
+		if (stack->value == nb)
+			return (1);
+		stack = stack->next;
+	}
+	return (0);
+}
+
 int	parse_arguments(int count, char **vale, t_node **stack_a)
 {
 	int		i;
 	int		nb;
 	t_node	*new;
 
-	i = 0;
+	i = count - 1;
 	nb = 0;
 	new = NULL;
-	while (i < count)
+	while (i >= 0)
 	{
 		if (is_valid_number(vale[i]))
 			return (1);
 		if (new_ft_atoi(vale[i], &nb))
 			return (1);
+		if (duplicate(*stack_a, nb))
+			return (1);
 		new = new_node(nb);
 		if (!new)
 			return (1);
 		push_node(stack_a, new);
-		i++;
+		i--;
 	}
 	return (0);
 }

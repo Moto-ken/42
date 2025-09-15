@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:02:39 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/15 14:51:25 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/16 01:27:57 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	is_sorted(t_node *stack_a)
 	while (stack_a && stack_a->next)
 	{
 		if (stack_a->value > stack_a->next->value)
-			return (1);
+			return (0);
 		stack_a = stack_a->next;
 	}
-	return (0);
+	return (1);
 }
 
 int	stack_size(t_node *stack_a)
@@ -63,11 +63,11 @@ int	main(int argc, char *argv[])
 		write(2, "Error\n", 6);
 		return (1);
 	}
-	if (!is_sorted(stack_a))
-	{
-		write(1, "OK\n", 3);
-		return (0);
-	}
+	// if (is_sorted(stack_a))
+	// {
+	// 	write(1, "OK\n", 3);
+	// 	return (0);
+	// }
 	size = stack_size(stack_a);
 	if (size == 2)
 		sort_2(&stack_a);
@@ -79,10 +79,10 @@ int	main(int argc, char *argv[])
 		sort_5(&stack_a, &stack_b);
 	else
 		radix_sort(&stack_a, &stack_b, size);
-	if (!is_sorted(stack_a) && stack_b == NULL)
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
+	// if (is_sorted(stack_a) && stack_b == NULL)
+	// 	write(1, "OK\n", 3);
+	// else
+	// 	write(1, "KO\n", 3);
 	free_stack(&stack_a);
 	free_stack(&stack_b);
 	return (0);
