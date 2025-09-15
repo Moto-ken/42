@@ -1,27 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/15 12:03:20 by kemotoha          #+#    #+#             */
+/*   Updated: 2025/09/15 12:03:24 by kemotoha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "push_swap.h"
 
-int is_valid_number(const char *str)
+int	is_valid_number(const char *str)
 {
-    if (*str == '-' || *str == '+')
-        str++;
-    if (!*str)
-        return (1);
-    while (*str)
+	if (*str == '-' || *str == '+')
+		str++;
+	if (!*str)
+		return (1);
+	while (*str)
 	{
-        if (*str < '0' || *str > '9')
-            return (1);
-        str++;
-    }
-    return (0);
+		if (*str < '0' || *str > '9')
+			return (1);
+		str++;
+	}
+	return (0);
 }
 
 int	new_ft_atoi(const char *nptr, int *out)
 {
-	int		i = 0;
-	int		sign = 1;
-	long	nb = 0;
+	int		i;
+	int		sign;
+	long	nb;
 
+	i = 0;
+	sign = 1;
+	nb = 0;
 	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
 	if (nptr[i] == '-' || nptr[i] == '+')
@@ -45,11 +59,15 @@ int	new_ft_atoi(const char *nptr, int *out)
 	return (0);
 }
 
-int parse_arguments(int count, char **vale, t_node **stack_a)
+int	parse_arguments(int count, char **vale, t_node **stack_a)
 {
-	int i = 0;
-	int nb = 0;
-	t_node *new = NULL;
+	int		i;
+	int		nb;
+	t_node	*new;
+
+	i = 0;
+	nb = 0;
+	new = NULL;
 	while (i < count)
 	{
 		if (is_valid_number(vale[i]))

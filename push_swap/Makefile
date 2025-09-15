@@ -1,4 +1,14 @@
-
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/09/15 12:02:53 by kemotoha          #+#    #+#              #
+#    Updated: 2025/09/15 14:32:25 by kemotoha         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -I.
@@ -13,6 +23,8 @@ SRCS = \
 	$(SRC_DIR)/parse.c \
 	$(SRC_DIR)/stack.c \
 	$(SRC_DIR)/util.c \
+	$(SRC_DIR)/radix_sort.c \
+	$(SRC_DIR)/min_sort.c \
 	$(OP_DIR)/push_stack.c \
 	$(OP_DIR)/swap_stack.c \
 	$(OP_DIR)/rotate_stack.c \
