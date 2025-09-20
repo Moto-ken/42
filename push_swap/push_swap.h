@@ -6,17 +6,18 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:03:28 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/15 14:34:04 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/20 14:24:04 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <limits.h> // INT_MAX etc...
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
 
 typedef struct s_node
 {

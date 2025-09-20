@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   radix_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 13:33:31 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/16 02:23:53 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/20 14:27:22 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	radix_sort(t_node **stack_a, t_node **stack_b, int size)
 		while (j < size)
 		{
 			if ((((*stack_a)->index >> i) & 1) == 0)
-				pb(stack_a, stack_b); // ビットiが0ならBへ
+				pb(stack_a, stack_b);
 			else
-				ra(stack_a); // ビットiが1ならAを回す
+				ra(stack_a);
 			j++;
 		}
 		while (*stack_b)

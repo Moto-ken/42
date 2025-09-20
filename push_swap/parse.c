@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:03:20 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/16 02:27:37 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/20 14:47:41 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_valid_number(const char *str)
+static int	is_valid_number(const char *str)
 {
 	if (*str == '-' || *str == '+')
 		str++;
@@ -27,15 +27,31 @@ int	is_valid_number(const char *str)
 	return (0);
 }
 
-int	new_ft_atoi(const char *nptr, int *out)
+static int	parse_number(const char *str, int *i, int sign, int *out)
 {
-	int		i;
-	int		sign;
 	long	nb;
+
+	nb = 0;
+	if (str[*i] < '0' || str[*i] > '9')
+		return (1);
+	while (str[*i] >= '0' && str[*i] <= '9')
+	{
+		nb = nb * 10 + (str[*i] - '0');
+		if ((sign == 1 && nb > INT_MAX) || (sign == -1 && (-nb) < INT_MIN))
+			return (1);
+		(*i)++;
+	}
+	*out = (int)(nb * sign);
+	return (0);
+}
+
+static int	new_ft_atoi(const char *nptr, int *out)
+{
+	int	i;
+	int	sign;
 
 	i = 0;
 	sign = 1;
-	nb = 0;
 	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
 	if (nptr[i] == '-' || nptr[i] == '+')
@@ -44,22 +60,14 @@ int	new_ft_atoi(const char *nptr, int *out)
 			sign = -1;
 		i++;
 	}
-	if (nptr[i] < '0' || nptr[i] > '9')
+	if (parse_number(nptr, &i, sign, out))
 		return (1);
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		nb = nb * 10 + (nptr[i] - '0');
-		if ((sign == 1 && nb > INT_MAX) || (sign == -1 && -nb < INT_MIN))
-			return (1);
-		i++;
-	}
 	if (nptr[i] != '\0')
 		return (1);
-	*out = (int)(nb * sign);
 	return (0);
 }
 
-int	duplicate(t_node *stack, int nb)
+static int	duplicate(t_node *stack, int nb)
 {
 	while (stack)
 	{
