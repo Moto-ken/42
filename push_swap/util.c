@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:03:35 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/20 15:02:01 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/22 03:50:54 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	find_pos(t_node *stack, int value)
 	return (-1);
 }
 
-void	move_to_top(t_node **stack, int value, char stack_name)
+void	move_to_top(t_node **stack, int value)
 {
 	int	pos;
 	int	size;
@@ -51,21 +51,23 @@ void	move_to_top(t_node **stack, int value, char stack_name)
 	if (pos <= size / 2)
 	{
 		while ((*stack)->value != value)
-		{
-			if (stack_name == 'a')
-				ra(stack);
-			else
-				rb(stack);
-		}
+			ra(stack);
 	}
 	else
 	{
 		while ((*stack)->value != value)
-		{
-			if (stack_name == 'b')
-				rra(stack);
-			else
-				rrb(stack);
-		}
+			rra(stack);
+	}
+}
+
+void	free_stack(t_node **stack)
+{
+	t_node	*tmp;
+
+	while (*stack)
+	{
+		tmp = (*stack)->next;
+		free(*stack);
+		*stack = tmp;
 	}
 }

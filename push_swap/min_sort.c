@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   min_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 14:31:19 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/15 14:31:41 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/21 04:23:47 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	sort_4(t_node **stack_a, t_node **stack_b)
 	int	min;
 
 	min = find_min(*stack_a);
-	move_to_top(stack_a, min, 'a');
+	move_to_top(stack_a, min);
 	pb(stack_a, stack_b);
 	sort_3(stack_a);
 	pa(stack_a, stack_b);
@@ -67,7 +67,7 @@ void	sort_5(t_node **stack_a, t_node **stack_b)
 	while (i < 2)
 	{
 		min = find_min(*stack_a);
-		move_to_top(stack_a, min, 'a');
+		move_to_top(stack_a, min);
 		pb(stack_a, stack_b);
 		i++;
 	}

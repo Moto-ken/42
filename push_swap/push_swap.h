@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:03:28 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/20 14:24:04 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/22 03:49:50 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void				sort_5(t_node **stack_a, t_node **stack_b);
 int					find_min(t_node *stack);
 int					stack_size(t_node *stack);
 int					find_pos(t_node *stack, int value);
-void				move_to_top(t_node **stack, int value, char stack_name);
+void				move_to_top(t_node **stack, int value);
 void				radix_sort(t_node **stack_a, t_node **stack_b, int size);
+char				**ft_split(char *str);
+void				free_split(char **split, int count);
+void				free_stack(t_node **stack);
 
 #endif

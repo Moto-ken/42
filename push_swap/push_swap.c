@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:02:39 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/20 15:00:45 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/22 03:51:18 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,6 @@ int	stack_size(t_node *stack_a)
 	return (i);
 }
 
-void	free_stack(t_node **stack)
-{
-	t_node	*tmp;
-
-	while (*stack)
-	{
-		tmp = (*stack)->next;
-		free(*stack);
-		*stack = tmp;
-	}
-}
-
 void	handle_sort(t_node **stack_a, t_node **stack_b, int size)
 {
 	if (size == 2)
@@ -62,6 +50,46 @@ void	handle_sort(t_node **stack_a, t_node **stack_b, int size)
 		radix_sort(stack_a, stack_b, size);
 }
 
+char	*ft_strchr(const char *s, int c)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)s + i);
+		i++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s + i);
+	return (NULL);
+}
+
+int argc2_parse(char *arg, t_node **stack_a)
+{
+    char **split_args;
+    int split_argc;
+    int res;
+    // 引数に空白があるかチェック
+    if (!ft_strchr(arg, ' '))
+    {
+        // 空白なし＝1つの数字だけなので、そのままparse_argumentsを呼ぶ
+        return (parse_arguments(1, &arg, stack_a));
+    }
+    // 空白あり→分割
+    split_args = ft_split(arg);
+    if (!split_args || !*split_args)
+        return (1);
+    split_argc = 0;
+    while (split_args[split_argc])
+        split_argc++;
+    // 分割した複数引数としてparse_argumentsを呼ぶ
+    res = parse_arguments(split_argc, split_args, stack_a);
+    free_split(split_args, split_argc);
+    return (res);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_node	*stack_a;
@@ -72,13 +100,27 @@ int	main(int argc, char *argv[])
 	stack_b = NULL;
 	if (argc < 2)
 		return (0);
-	if (parse_arguments(argc - 1, &argv[1], &stack_a))
+	if (argc == 2)
 	{
-		write(2, "Error\n", 6);
-		return (1);
+    	if (argc2_parse(argv[1], &stack_a))
+    	{
+        	write(2, "Error\n", 6);
+        	return (1);
+    	}
+	}
+	else
+	{
+    	if (parse_arguments(argc - 1, &argv[1], &stack_a))
+	    {
+        	write(2, "Error\n", 6);
+        	return 1;
+    	}
 	}
 	if (is_sorted(stack_a))
+	{
+		free_stack(&stack_a);
 		return (0);
+	}
 	size = stack_size(stack_a);
 	handle_sort(&stack_a, &stack_b, size);
 	free_stack(&stack_a);
