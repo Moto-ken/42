@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+         #
+#    By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/15 12:02:53 by kemotoha          #+#    #+#              #
-#    Updated: 2025/09/21 05:29:19 by kemotoha         ###   ########.fr        #
+#    Updated: 2025/09/23 19:04:19 by kemotoha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ SRCS = \
 	$(SRC_DIR)/radix_sort.c \
 	$(SRC_DIR)/min_sort.c \
 	$(SRC_DIR)/ft_split.c \
+	$(SRC_DIR)/argument_judge.c \
+	$(SRC_DIR)/conversion_number.c \
 	$(OP_DIR)/push_stack.c \
 	$(OP_DIR)/swap_stack.c \
 	$(OP_DIR)/rotate_stack.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:03:35 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/22 03:50:54 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/23 18:52:09 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,19 @@ void	free_stack(t_node **stack)
 		free(*stack);
 		*stack = tmp;
 	}
+}
+
+void	free_split(char **split, int count)
+{
+	int	i;
+
+	if (!split)
+		return ;
+	i = 0;
+	while (i < count)
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }

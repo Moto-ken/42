@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 12:03:28 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/09/22 03:49:50 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/09/23 19:03:38 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void				radix_sort(t_node **stack_a, t_node **stack_b, int size);
 char				**ft_split(char *str);
 void				free_split(char **split, int count);
 void				free_stack(t_node **stack);
-
+int					argument_judge(int argc, char **argv, t_node **stack_a);
+int					new_ft_atoi(const char *nptr, int *out);
 #endif
