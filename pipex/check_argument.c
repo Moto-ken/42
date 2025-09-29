@@ -53,7 +53,7 @@ int is_valid_command(char *cmd, char **envp)
 	return (0);
 }
 
-int check_argumrnts(int argc, char **argv, char **envp)
+int check_arguments(int argc, char **argv)
 {
 	if (argc != 5)
 		return (1);
@@ -62,46 +62,6 @@ int check_argumrnts(int argc, char **argv, char **envp)
 		perror("Error");
 		return (1);
 	}
-	char **cmd1 = ft_split(argv[2], ' ');
-	if (!cmd1)
-		return (1);
-	if (!is_valid_command(cmd1[0], envp))
-	{
-		if (ft_strchr(cmd1[0], '/') && errno == ENOENT)
-			perror(argv[2]);
-		else if (errno == EACCES)
-			perror(argv[2]);
-		else if (errno == ENOMEM)
-			perror(argv[2]);
-		else
-		{
-			write(2, cmd1[0], ft_strlen(cmd1[0]));
-			write(2, ": command not found\n", 20);
-		}
-		free_paths(cmd1);
-		return (1);
-	}
-	free_paths(cmd1);
-	char **cmd2 = ft_split(argv[3], ' ');
-	if (!cmd2)
-		return (1);
-	if (!is_valid_command(cmd2[0], envp))
-	{
-		if (ft_strchr(cmd2[0], '/') && errno == ENOENT)
-			perror(argv[3]);
-		else if (errno == EACCES)
-			perror(argv[3]);
-		else if (errno == ENOMEM)
-			perror(argv[3]);
-		else
-		{
-			write(2, cmd2[0], ft_strlen(cmd2[0]));
-			write(2, ": command not found\n", 20);
-		}
-		free_paths(cmd2);
-		return (1);
-	}
-	free_paths(cmd2);
 	int fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{

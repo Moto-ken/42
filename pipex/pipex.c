@@ -9,7 +9,8 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid1;
 	pid_t	pid2;
 
-	if (check_argumrnts(argc, argv, envp))
+	(void)argc;
+	if (check_arguments(argc, argv))
 		return (1);
 	infile = open(argv[1], O_RDONLY);
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);

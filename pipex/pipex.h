@@ -12,13 +12,13 @@
 #include <sys/wait.h>
 #include "libft.h"
 
-int     check_argumrnts(int argc, char **argv, char **envp);
+int     check_arguments(int argc, char **argv);
 char    *get_path_envp(char **envp);
 int     is_valid_command(char *cmd, char **envp);
 char    *join_path(const char *dir, const char *cmd);
 void    free_paths(char **str);
 void	child1_process(int infile, int pipefd[2], char *cmd, char **envp);
 void	child2_process(int outfile, int pipefd[2], char *cmd, char **envp);
-char *parse_cmd(char *cmd, char **envp);
+char    *parse_cmd(char *cmd, char **envp);
 
 #endif
