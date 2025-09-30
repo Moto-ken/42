@@ -7,10 +7,10 @@ LIBFT_DIR   := ./libft
 CFLAGS      := -Wall -Wextra -Werror -I$(LIBFT_DIR)
 
 SRCS     = pipex.c \
-           check_argument.c \
+           cmd_validation.c \
 		   utile.c \
-		   child_process1.c \
-		   child_process2.c
+		   command_handler.c \
+		   child_process.c
 
 OBJS        := $(SRCS:.c=.o)
 
