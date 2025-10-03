@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_handler.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/03 17:03:17 by kemotoha          #+#    #+#             */
+/*   Updated: 2025/10/03 23:37:56 by kemotoha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "pipex.h"
 
-static char *search_cmd(char *cmd, char **envp)
+static char	*search_cmd(char *cmd, char **envp)
 {
-	char	*path_env = get_path_envp(envp);
+	char	*path_env;
 	char	**paths;
 	char	*full_path;
 	int		i;
 
+	path_env = get_path_envp(envp);
 	if (!path_env)
 		return (NULL);
 	paths = ft_split(path_env, ':');
@@ -29,7 +41,7 @@ static char *search_cmd(char *cmd, char **envp)
 	return (NULL);
 }
 
-char *parse_cmd(char *cmd, char **envp)
+char	*parse_cmd(char *cmd, char **envp)
 {
 	if (!cmd || cmd[0] == '\0')
 		return (NULL);
@@ -39,19 +51,21 @@ char *parse_cmd(char *cmd, char **envp)
 			return (ft_strdup(cmd));
 		else
 			return (NULL);
-    }
+	}
 	return (search_cmd(cmd, envp));
 }
 
 void	validate_command(char **cmd_op, char **envp)
 {
-	if (is_valid_command(cmd_op[0], envp))
-		return;
-	if (ft_strchr(cmd_op[0], '/') && errno == ENOENT)
+	int	cmd_error;
+
+	if (is_valid_command(cmd_op[0], envp, &cmd_error))
+		return ;
+	if (ft_strchr(cmd_op[0], '/') && cmd_error == CMD_ERR_NOT_FOUND)
 		perror(cmd_op[0]);
-	else if (errno == EACCES)
+	else if (cmd_error == CMD_ERR_NO_PERMISSION)
 		perror(cmd_op[0]);
-	else if (errno == ENOMEM)
+	else if (cmd_error == CMD_ERR_NO_MEMORY)
 		perror(cmd_op[0]);
 	else
 	{
@@ -60,7 +74,7 @@ void	validate_command(char **cmd_op, char **envp)
 	}
 	free_paths(cmd_op);
 	write(STDOUT_FILENO, "", 0);
-	if (errno == ENOENT)
+	if (cmd_error == CMD_ERR_NOT_FOUND)
 		exit(127);
 	else
 		exit(126);
@@ -68,7 +82,9 @@ void	validate_command(char **cmd_op, char **envp)
 
 void	exec_command(char **cmd_op, char **envp)
 {
-	char *path = parse_cmd(cmd_op[0], envp);
+	char	*path;
+
+	path = parse_cmd(cmd_op[0], envp);
 	if (!path)
 	{
 		perror("parse_cmd");

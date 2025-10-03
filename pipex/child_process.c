@@ -1,66 +1,84 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child_process.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/03 17:03:10 by kemotoha          #+#    #+#             */
+/*   Updated: 2025/10/04 06:05:28 by kemotoha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	child1_process(int infile, int pipefd[2], char *cmd, char **envp)
+static void	child1_process(t_pipex *data)
 {
 	char	**cmd_op;
 
-	if (dup2(infile, STDIN_FILENO) == -1)
+	if (dup2(data->infile, STDIN_FILENO) == -1)
 		perror("dup2 infile");
-	if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+	if (dup2(data->pipefd[1], STDOUT_FILENO) == -1)
 		perror("dup2 pipefd[1]");
-	close(pipefd[0]);
-	close(pipefd[1]);
-	cmd_op = ft_split(cmd, ' ');
+	close(data->infile);
+	close(data->pipefd[0]);
+	close(data->pipefd[1]);
+	cmd_op = ft_split(data->argv[2], ' ');
 	if (!cmd_op || !cmd_op[0])
 	{
 		ft_putendl_fd("pipex: invalid command", STDERR_FILENO);
 		free_paths(cmd_op);
 		exit(127);
 	}
-	validate_command(cmd_op, envp);
-	exec_command(cmd_op, envp);
+	validate_command(cmd_op, data->envp);
+	exec_command(cmd_op, data->envp);
 }
 
-static void	child2_process(int outfile, int pipefd[2], char *cmd, char **envp)
+static void	child2_process(t_pipex *data)
 {
 	char	**cmd_op;
+	char	*outfile_path;
 
-	if (dup2(pipefd[0], STDIN_FILENO) == -1)
+	outfile_path = data->argv[4];
+	data->outfile = open(outfile_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (data->outfile < 0)
+	{
+		perror(outfile_path);
+		exit(1);
+	}
+	if (dup2(data->pipefd[0], STDIN_FILENO) == -1)
 		perror("dup2 pipefd[0]");
-	if (dup2(outfile, STDOUT_FILENO) == -1)
+	if (dup2(data->outfile, STDOUT_FILENO) == -1)
 		perror("dup2 outfile");
-	close(pipefd[0]);
-	close(pipefd[1]);
-	cmd_op = ft_split(cmd, ' ');
+	close_fds(-1, data->outfile, data->pipefd);
+	cmd_op = ft_split(data->argv[3], ' ');
 	if (!cmd_op || !cmd_op[0])
 	{
 		ft_putendl_fd("pipex: invalid command", STDERR_FILENO);
 		free_paths(cmd_op);
 		exit(127);
 	}
-	validate_command(cmd_op, envp);
-	exec_command(cmd_op, envp);
+	validate_command(cmd_op, data->envp);
+	exec_command(cmd_op, data->envp);
 }
 
-int	run_children(int infile, int outfile, int pipefd[2], char **argv, char **envp, pid_t *pid1, pid_t *pid2)
+int	run_children(t_pipex *data)
 {
-	*pid1 = fork();
-	if (*pid1 == -1)
+	data->pid1 = fork();
+	if (data->pid1 == -1)
 	{
 		perror("fork");
 		return (1);
 	}
-	if (*pid1 == 0)
-		child1_process(infile, pipefd, argv[2], envp);
-
-	*pid2 = fork();
-	if (*pid2 == -1)
+	if (data->pid1 == 0)
+		child1_process(data);
+	data->pid2 = fork();
+	if (data->pid2 == -1)
 	{
 		perror("fork");
 		return (1);
 	}
-	if (*pid2 == 0)
-		child2_process(outfile, pipefd, argv[3], envp);
+	if (data->pid2 == 0)
+		child2_process(data);
 	return (0);
 }

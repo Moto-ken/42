@@ -1,39 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_validation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/03 17:03:14 by kemotoha          #+#    #+#             */
+/*   Updated: 2025/10/03 23:41:15 by kemotoha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "pipex.h"
 
-static int validate_absolute_command(char *cmd)
+static int	validate_absolute_command(char *cmd, int *cmd_error)
 {
 	if (access(cmd, X_OK) == 0)
 		return (1);
 	if (access(cmd, F_OK) != 0)
-		errno = ENOENT;
+		*cmd_error = CMD_ERR_NOT_FOUND;
 	else
-		errno = EACCES;
+		*cmd_error = CMD_ERR_NO_PERMISSION;
 	return (0);
 }
 
-static char **get_split_paths(char **envp)
+static char	**get_split_paths(char **envp, int *cmd_error)
 {
-	char *path_str = get_path_envp(envp);
+	char	*path_str;
+	char	**paths;
+
+	path_str = get_path_envp(envp);
 	if (!path_str)
 	{
-		errno = ENOENT;
+		*cmd_error = CMD_ERR_NOT_FOUND;
 		return (NULL);
 	}
-	char **paths = ft_split(path_str, ':');
+	paths = ft_split(path_str, ':');
 	if (!paths)
-		errno = ENOMEM;
-	return paths;
+		*cmd_error = CMD_ERR_NO_MEMORY;
+	return (paths);
 }
 
-
-static int validate_path_command(char *cmd, char **envp)
+static int	validate_path_command(char *cmd, char **envp, int *cmd_error)
 {
 	int		i;
 	char	**paths;
 	char	*full_path;
 
-	paths = get_split_paths(envp);
+	paths = get_split_paths(envp, cmd_error);
 	i = 0;
 	while (paths[i])
 	{
@@ -48,19 +61,19 @@ static int validate_path_command(char *cmd, char **envp)
 		i++;
 	}
 	free_paths(paths);
-	errno = ENOENT;
+	*cmd_error = CMD_ERR_NOT_FOUND;
 	return (0);
 }
 
-int is_valid_command(char *cmd, char **envp)
+int	is_valid_command(char *cmd, char **envp, int *cmd_error)
 {
 	if (!cmd || cmd[0] == '\0')
 	{
-		errno = ENOENT;
+		*cmd_error = CMD_ERR_NOT_FOUND;
 		return (0);
 	}
 	if (ft_strchr(cmd, '/'))
-		return (validate_absolute_command(cmd));
+		return (validate_absolute_command(cmd, cmd_error));
 	else
-		return (validate_path_command(cmd, envp));
+		return (validate_path_command(cmd, envp, cmd_error));
 }
