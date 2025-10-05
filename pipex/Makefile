@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+         #
+#    By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/03 17:03:21 by kemotoha          #+#    #+#              #
-#    Updated: 2025/10/03 18:52:40 by kemotoha         ###   ########.fr        #
+#    Updated: 2025/10/05 02:04:22 by kemotoha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ SRCS     = pipex.c \
            cmd_validation.c \
 		   utile.c \
 		   command_handler.c \
-		   child_process.c
+		   child_process.c \
+		   split_quotes.c \
+		   utile_split_quotes.c
 
 OBJS        := $(SRCS:.c=.o)
 

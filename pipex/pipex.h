@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 17:03:28 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/04 06:05:58 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/05 02:05:45 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,11 @@ char		*parse_cmd(char *cmd, char **envp);
 void		validate_command(char **cmd_op, char **envp);
 void		exec_command(char **cmd_op, char **envp);
 int			run_children(t_pipex *data);
+char		**split_quotes(const char *str);
+
+int	count_tokens(const char *str);
+int ft_isspace(int c);
+int	is_quote(char c);
+int	token_len(const char *str);
 
 #endif
