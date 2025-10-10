@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 17:03:10 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/07 06:22:41 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/10 16:49:12 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	child1_process(t_pipex *data)
 	close(data->pipefd[0]);
 	close(data->pipefd[1]);
 	cmd_op = split_quotes(data->argv[2]);
-	if (!cmd_op || !cmd_op[0])
+	if (!cmd_op | !cmd_op[0])
 	{
 		ft_putendl_fd("pipex: invalid command", STDERR_FILENO);
 		free_paths(cmd_op);
@@ -52,7 +52,7 @@ static void	child2_process(t_pipex *data)
 		perror("dup2 outfile");
 	close_fds(-1, data->outfile, data->pipefd);
 	cmd_op = split_quotes(data->argv[3]);
-	if (!cmd_op || !cmd_op[0])
+	if (!cmd_op | !cmd_op[0])
 	{
 		ft_putendl_fd("pipex: invalid command", STDERR_FILENO);
 		free_paths(cmd_op);

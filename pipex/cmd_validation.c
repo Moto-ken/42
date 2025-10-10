@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 17:03:14 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/09 12:49:51 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/10 16:38:08 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,6 @@ static char	**get_split_paths(char **envp, int *cmd_error)
 	return (paths);
 }
 
-// static int	validate_path_command(char *cmd, char **envp, int *cmd_error)
-// {
-// 	int		i;
-// 	char	**paths;
-// 	char	*full_path;
-
-// 	paths = get_split_paths(envp, cmd_error);
-// 	i = 0;
-// 	if (!paths)
-// 	{
-// 		write(2, cmd, ft_strlen(cmd));
-// 		write(2, ": No such file or directory\n", 29);
-// 	}
-// 	while (paths[i])
-// 	{
-// 		full_path = join_path(paths[i], cmd);
-// 		if (access(full_path, X_OK) == 0)
-// 		{
-// 			free_paths(paths);
-// 			free(full_path);
-// 			return (1);
-// 		}
-// 		free(full_path);
-// 		i++;
-// 	}
-// 	free_paths(paths);
-// 	*cmd_error = CMD_ERR_NOT_FOUND;
-// 	return (0);
-// }
-
 static int	validate_path_command(char *cmd, char **envp, int *cmd_error)
 {
 	int		i;
@@ -98,7 +68,6 @@ static int	validate_path_command(char *cmd, char **envp, int *cmd_error)
 	*cmd_error = CMD_ERR_NOT_FOUND;
 	return (0);
 }
-
 
 int	is_valid_command(char *cmd, char **envp, int *cmd_error)
 {
