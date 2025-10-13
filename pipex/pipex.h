@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 17:03:28 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/10 16:21:28 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/10 21:19:26 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_pipex
 	char	**envp;
 	pid_t	pid1;
 	pid_t	pid2;
+	int		file_error;
 }			t_pipex;
 
 # define CMD_ERR_NOT_FOUND 1

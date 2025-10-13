@@ -6,17 +6,18 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 17:03:24 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/10 16:30:12 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/10 21:34:23 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static int	open_infiles(char *infile_path, int *infile)
+static int	open_infiles(char *infile_path, int *infile, int *file_error)
 {
 	*infile = open(infile_path, O_RDONLY);
 	if (*infile < 0)
 	{
+		*file_error = 1;
 		perror(infile_path);
 		*infile = open("/dev/null", O_RDONLY);
 		if (*infile < 0)
@@ -49,7 +50,8 @@ static int	return_status(pid_t pid1, pid_t pid2)
 		perror("waitpid");
 	if (waitpid(pid2, &status2, 0) == -1)
 		perror("waitpid pid2");
-	return (WEXITSTATUS(status2));
+	if (WIFEXITED(status2))
+		return (WEXITSTATUS(status2));
 	return (127);
 }
 
@@ -62,7 +64,8 @@ int	main(int argc, char **argv, char **envp)
 	data.argv = argv;
 	data.envp = envp;
 	data.outfile = -1;
-	if (open_infiles(argv[1], &data.infile))
+	data.file_error = 0;
+	if (open_infiles(argv[1], &data.infile, &data.file_error))
 		return (1);
 	if (pipe(data.pipefd) == -1)
 	{

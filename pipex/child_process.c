@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 17:03:10 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/10 16:49:12 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/10 22:04:52 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	child1_process(t_pipex *data)
 {
 	char	**cmd_op;
 
+	if (data->file_error == 1)
+		exit(1);
 	if (dup2(data->infile, STDIN_FILENO) == -1)
 		perror("dup2 infile");
 	if (dup2(data->pipefd[1], STDOUT_FILENO) == -1)
