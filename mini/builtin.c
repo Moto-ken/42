@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 02:31:20 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/16 05:01:32 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/22 16:05:44 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-// delete ft_strncmp
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (i < n - 1 && (unsigned char)s1[i] == (unsigned char)s2[i])
-	{
-		if (s1[i] == '\0')
-			return (s1[i] - s2[i]);
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
 
 bool	is_builtin(const char *cmd)
 {
@@ -40,17 +22,58 @@ bool	is_builtin(const char *cmd)
 		|| ft_strncmp(cmd, "exit", 4) == 0);
 }
 
-int	main(int argc, char **argv, char **envp)
+static void init_env_from_envp(t_shell *shell, char **envp)
 {
-	char	**cmd_args;
-	char	*cmd;
+    int i = 0;
+    
+    while (envp[i])
+    {
+        char *key = extract_key(envp[i]);
+        char *value = extract_value(envp[i]);
+        set_variable(shell, key, value, 1);
+        free(key);
+        free(value);
+        i++;
+    }
+}
 
-	(void)argc;
-	cmd_args = &argv[1];
-	cmd = cmd_args[0];
-	if (is_builtin(cmd))
-		run_builtin(cmd_args, envp);
-	// else
-	// 	gaibu_cmd_args(cmd_args);
-	return (0);
+static void free_env_list(t_env *env_list)
+{
+    t_env *current;
+    t_env *next;
+
+    current = env_list;
+    while (current)
+    {
+        next = current->next;
+        free(current->key);
+        free(current->value);
+        free(current);
+        current = next;
+    }
+}
+
+int main(int argc, char **argv, char **envp)
+{
+    t_shell shell;
+    char **cmd_args;
+    char *cmd;
+
+    shell.env_list = NULL;
+    shell.pwd = get_pwd();
+    if (!shell.pwd)
+        return (1);
+
+    init_env_from_envp(&shell, envp); 
+    (void)argc;
+    cmd_args = &argv[1];
+    cmd = cmd_args[0];
+    
+    if (is_builtin(cmd))
+        run_builtin(&shell, cmd_args);
+    // else
+    //     run_external_cmd(&shell, cmd_args);
+    free_env_list(shell.env_list);
+    free(shell.pwd);
+    return (0);
 }

@@ -3,57 +3,175 @@
 /*                                                        :::      ::::::::   */
 /*   export_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kemotoha <kemotoha@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 02:38:22 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/18 22:58:15 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/22 22:24:43 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	count_token(char **cmd)
+#include "../builtin.h"
+#include <ctype.h> // delete this function isalpha
+
+int is_valid_varname(const char *var)
 {
-	int	i;
+	int i = 0;
 
-	i = 0;
-	while (cmd[i])
-		i++;
-	return (i);
-}
-
-static int	is_valid_varname(const char *var)
-{
-	int	i;
-
-	i = 0;
 	if (!var || !(isalpha(var[0]) || var[0] == '_'))
-		return (0); // 変数名は英字または _ で始まる必要がある
+		return (0);
 	while (var[i])
 	{
-		if (var[i] == '=')
-			break ;
 		if (!(isalnum(var[i]) || var[i] == '_'))
-			return (0); // 英数字かアンダースコア以外はNG
+			return (0);
 		i++;
 	}
 	return (1);
 }
 
-void	jugde_token(char *cmd)
+static void handle_export_arg(t_shell *shell, char *arg)
 {
-	if (!is_valid_varname(cmd))
-		exit(1);
+    char *key;
+    char *value;
+    t_env *existing;
+
+    key = extract_key(arg);
+    if (!key)
+        return;
+    if (!is_valid_varname(key))
+    {
+        write(2, "export: `", 9);
+        write(2, arg, ft_strlen(arg));
+        write(2, "': not a valid identifier\n", 26);
+        free(key);
+        return;
+    }
+    value = extract_value(arg);
+    if (value)
+    {
+        set_variable(shell, key, value, 1);
+        free(value);
+    }
+    else
+    {
+        existing = find_env(shell->env_list, key);
+        if (existing)
+            existing->exported = 1;
+        else
+            set_variable(shell, key, "", 1);
+    }   
+    free(key);
 }
 
-void	export_cmd(char **cmd, char **envp)
+static void sort_env_array(t_env **arr, int count)
 {
-	int	token;
-	int	i;
+	int i;
+	int j;
+	t_env *tmp;
 
-	i = 1;
-	token = count_token(cmd);
-	while (token <= i)
+	i = 0;
+	while (i < count - 1)
 	{
-		jugde_token(cmd[i]);
+		j = 0;
+		while (j < count - i - 1)
+		{
+			if (ft_strcmp(arr[j]->key, arr[j + 1]->key) > 0)
+			{
+				tmp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tmp;
+			}
+			j++;
+		}
 		i++;
 	}
+}
+
+static int count_exported_vars(t_env *env_list)
+{
+	t_env *current;
+	int count;
+
+	count = 0;
+	current = env_list;
+	while (current)
+	{
+		if (current->exported)
+			count++;
+		current = current->next;
+	}
+	return (count);
+}
+
+static t_env **env_list_to_array(t_env *env_list, int count)
+{
+	t_env **array;
+	t_env *current;
+	int i;
+
+	array = malloc(sizeof(t_env *) * count);
+	if (!array)
+		return (NULL);
+	i = 0;
+	current = env_list;
+	while (current)
+	{
+		if (current->exported)
+		{
+			array[i] = current;
+			i++;
+		}
+		current = current->next;
+	}
+	return (array);
+}
+
+static void print_sorted_env(t_env **sorted, int count, int fd)
+{
+	int i;
+
+	i = 0;
+	while (i < count)
+	{
+		ft_putstr_fd("declare -x ", fd);
+		ft_putstr_fd(sorted[i]->key, fd);
+		ft_putchar_fd('=', fd);
+		ft_putchar_fd('"', fd);
+		ft_putstr_fd(sorted[i]->value, fd);
+		ft_putchar_fd('"', fd);
+		ft_putchar_fd('\n', fd);
+		i++;
+	}
+}
+
+static void print_exported_vars(t_env *env_list, int fd)
+{
+	t_env **sorted;
+	int count;
+
+	count = count_exported_vars(env_list);
+	if (count == 0)
+		return;
+	sorted = env_list_to_array(env_list, count);
+	if (!sorted)
+		return;
+	sort_env_array(sorted, count);
+	print_sorted_env(sorted, count, fd);
+	free(sorted);
+}
+
+void export_cmd(t_shell *shell, char **cmd, int fd)
+{
+    int i;
+    
+    if (!cmd[1])
+    {
+        print_exported_vars(shell->env_list, fd);
+        return;
+    }
+    i = 1;
+    while (cmd[i])
+    {
+        handle_export_arg(shell, cmd[i]);
+        i++;
+    }
 }
