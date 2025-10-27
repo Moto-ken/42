@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 02:31:20 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/22 16:05:44 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/27 21:47:52 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,14 @@ int main(int argc, char **argv, char **envp)
 
     init_env_from_envp(&shell, envp); 
     (void)argc;
+    shell.fd = 1;
     cmd_args = &argv[1];
     cmd = cmd_args[0];
     
     if (is_builtin(cmd))
         run_builtin(&shell, cmd_args);
-    // else
-    //     run_external_cmd(&shell, cmd_args);
+    else
+        run_external_cmd(&shell, cmd_args);
     free_env_list(shell.env_list);
     free(shell.pwd);
     return (0);

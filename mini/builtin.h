@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 02:05:22 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/22 22:21:24 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/28 02:18:43 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 typedef struct s_env
 {
@@ -31,6 +33,7 @@ typedef struct s_shell
 {
 	t_env	*env_list;
 	char	*pwd;
+	int		fd;
 }	t_shell;
 
 char	*get_pwd(void);
@@ -41,6 +44,7 @@ char	*extract_value(const char *str);
 
 void	set_variable(t_shell *shell, char *key, char *value, int exported);
 t_env	*find_env(t_env *env_list, const char *key);
+int count_exported_vars(t_env *env_list);
 
 void	run_builtin(t_shell *shell, char **cmd);
 void	echo_cmd(char **cmd);
@@ -58,5 +62,12 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_strcmp(const char *s1, const char *s2);
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+char	**ft_split(char const *s, char c);
+
+char *find_command_path(t_shell *shell, char *cmd);
+void run_external_cmd(t_shell *shell, char **cmd_args);
+char *get_env_value(t_env *env_list, const char *key);
 
 #endif

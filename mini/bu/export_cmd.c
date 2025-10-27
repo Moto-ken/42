@@ -6,7 +6,7 @@
 /*   By: kemotoha <kemotoha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 02:38:22 by kemotoha          #+#    #+#             */
-/*   Updated: 2025/10/22 22:24:43 by kemotoha         ###   ########.fr       */
+/*   Updated: 2025/10/27 23:22:09 by kemotoha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void sort_env_array(t_env **arr, int count)
 	}
 }
 
-static int count_exported_vars(t_env *env_list)
+int count_exported_vars(t_env *env_list)
 {
 	t_env *current;
 	int count;
